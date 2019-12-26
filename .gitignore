@@ -136,3 +136,5 @@ dmypy.json
 .vscode
 .idea
 
+# Local sensitive data files
+wifi-credentials.txt
