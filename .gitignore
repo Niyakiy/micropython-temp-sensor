@@ -132,6 +132,7 @@ dmypy.json
 # Micropython
 .micropythonrc
 
-# VSCode
+# VSCode + PyCharm
 .vscode
+.idea
 

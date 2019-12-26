@@ -8,7 +8,7 @@ except:
 import ure
 import ujson
 
-REQUEST_REGEX = r"^(?P<http_method>\S+)\s+(?P<request_uri>\S+)\s+(?P<http_schema>\S+)\\r\\n.*$"
+REQUEST_REGEX = r"^(\S+)\s+(\S+)\s+(\S+)\\r\\n.*$"
 
 
 def send_400(connection):
@@ -31,7 +31,7 @@ def socket_server():
             send_400(conn)
             continue
 
-        if res.group('request_uri') == '/temp':
+        if res.group(2) == '/temp':
             retry = 0
             while retry < 3:
                 try:
