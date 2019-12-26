@@ -1,10 +1,5 @@
 # This is script that run when device boot up or wake from sleep.
 
-try:
-    import usocket as socket
-except:
-    import socket
-
 from machine import Pin, I2C
 import network
 import ubinascii
@@ -32,7 +27,7 @@ def get_wifi_creds(creds_file='wifi-credentials.txt'):
     """
 
     try:
-        return open(creds_file, 'r').readlines()
+        return [line.strip() for line in open(creds_file, 'r').readlines()]
     except IOError as err:
         print("Error loading WiFi credentials: ", err)
 
@@ -47,6 +42,10 @@ def connect_to_wifi():
     """
 
     creds = get_wifi_creds()
+    print("Using {} password to connect to {}".format(
+        creds[1],
+        creds[0]
+    ))
 
     station = network.WLAN(network.STA_IF)
     station.active(True)
@@ -61,7 +60,7 @@ def connect_to_wifi():
             print("\nTimed out connection to {} WiFi network".format(creds[0]))
             return False
 
-    print('Connected to {} WiFi network.\nIP params: {}\nMac: {}'.format(
+    print('\nConnected to {} WiFi network.\nIP params: {}\nMac: {}'.format(
         creds[0],
         station.ifconfig(),
         ubinascii.hexlify(station.config('mac'), ':').decode()
@@ -76,4 +75,3 @@ connect_to_wifi()
 ht = dht.DHT22(Pin(0, Pin.IN, Pin.PULL_UP))
 i2c = I2C(scl=Pin(5), sda=Pin(4), freq=10000)
 bme = bme280.BME280(i2c=i2c)
-led = Pin(2, Pin.OUT)
