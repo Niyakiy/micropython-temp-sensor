@@ -32,33 +32,11 @@ def socket_server():
             continue
 
         if res.group(2) == '/temp':
-            retry = 0
-            while retry < 3:
-                try:
-                    ht.measure()
-                    break
-                except Exception as err:
-                    retry = retry + 1
-                    print(".", end="")
-                    time.sleep(0.1)
-
-            print("")
-
             resp_data = {
                 'bme_temperature': float(bme.temperature.strip('C')),
                 'bme_humidity': float(bme.humidity.strip('%')),
                 'bme_pressure': float(bme.pressure.strip('hPa')),
             }
-            if retry < 3:
-                resp_data.update({
-                    'dht_temperature': ht.temperature(),
-                    'dht_humidity': ht.humidity()
-                })
-            else:
-                resp_data.update({
-                    'dht_temperature': '',
-                    'dht_humidity': ''
-                })
 
             conn.send('HTTP/1.1 200 OK\n')
             conn.send('Content-Type: application/json\n')
