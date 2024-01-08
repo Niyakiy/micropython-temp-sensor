@@ -11,3 +11,6 @@
 * BME sensor's SDA connected to `GPIO4` (`D2`) line and SCL is connected to `GPIO5` (`D1`) line
 * Both sensors connected to `3.3V` and `Gnd` lines on NodeMCU
 * Special file `wifi-credentials.txt` should contain WiFi SSID in 1st line and its password on 2nd
+
+dummy edit
+
